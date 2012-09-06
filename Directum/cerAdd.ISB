@@ -1,0 +1,21 @@
+    Events = DetailDataSet.Events
+    Events.AddCheckPoint
+    Events.Events(dseBeforeInsert).Enabled = False    
+    DetailDataSet.Append
+    Events.ReleaseCheckPoint
+    DetailDataSet.Requisites(SYSREQ_USERS_USER_CERTIFICATE_SUBJECT_NAME).AsString = CertificateOwner
+    DetailDataSet.Requisites(SYSREQ_USERS_USER_CERTIFICATE_THUMBPRINT).AsString = CertificateID
+    if CertificateSpecifyMethod = 0
+      DetailDataSet.Requisites(SYSREQ_USERS_USER_CERTIFICATE).LoadFromFile(CertificateFileName)
+    else
+      if CertificateSpecifyMethod = 1
+        DetailDataSet.Requisites(SYSREQ_USERS_USER_CERTIFICATE).AsString = CertificateID
+      endif
+    endif
+    DetailDataSet.Requisites(SYSREQ_USERS_USER_CERTIFICATE_STATE).AsString = OPERATING_RECORD_FLAG_FEMININE
+    DetailDataSet.Requisites(SYSREQ_USERS_USER_CERTIFICATE_PLUGIN_NAME).AsString = PluginName
+    
+//@begin uxm, 16/07/2010
+    DetailDataSet.ISBCertificateType='ЭЦП и шифрование'
+    DetailDataSet.ISBCertificateInfo=Sender.Form.View.Component.DataSet.Дополнение3
+//@end uxm, 16/07/2010
